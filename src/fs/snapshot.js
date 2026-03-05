@@ -11,18 +11,27 @@ const snapshot = async () => {
       withFileTypes: true,
       recursive: true,
     });
-    myData["rootPath"] = await fsPromises.realpath("./workspace");
+
+    const rootPath = await fsPromises.realpath("./workspace");
+
+    myData["rootPath"] = rootPath
+      .split(path.sep)
+      .join("/");
     myData.entries = [];
 
     for (const file of files) {
+      const filePath = path.join(file.parentPath, file.name);
+      const relativePath = path
+        .relative(workspacePath, filePath)
+        .split(path.sep)
+        .join("/");
       if (file.isDirectory()) {
-        myData.entries.push({ path: file.name, type: "directory" });
+        myData.entries.push({ path: relativePath, type: "directory" });
       } else if (file.isFile()) {
-        const fName = path.join(file.parentPath, file.name);
-        const stats = await fsPromises.stat(fName);
-        const content = await fsPromises.readFile(fName);
+        const stats = await fsPromises.stat(filePath);
+        const content = await fsPromises.readFile(filePath);
         myData.entries.push({
-          path: file.name,
+          path: relativePath,
           type: "file",
           size: stats.size,
           content: content.toString("base64"),
