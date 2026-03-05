@@ -45,7 +45,6 @@ const snapshot = async () => {
     );
   } catch (err) {
     if (err.code === "ENOENT") {
-      console.log("Workspace directory not found");
       throw new Error("FS operation failed");
     }
     throw err;
