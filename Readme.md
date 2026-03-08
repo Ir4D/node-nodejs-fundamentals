@@ -37,7 +37,8 @@ This repository contains solutions for Node.js Fundamentals assignment. The assi
 
 ### File System (src/fs)
 
-- `npm run fs:snapshot` - Create snapshot of workspace directory
+- `npm run fs:snapshot` - Create snapshot of workspace directory  
+⚠️ **Note:** To test this script, create a folder called `workspace` in the project root and add some files and folders inside it.
 - `npm run fs:restore` - Restore directory structure from snapshot
 - `npm run fs:findByExt` - Find files by extension in workspace
 - `npm run fs:merge` - Merge .txt files from workspace/parts
